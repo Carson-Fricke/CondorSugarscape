@@ -47,7 +47,7 @@ seeds:
 	cd data && $(PYTHON) run.py --conf ../$(CONFIG) --seeds
 
 setup:
-	cp $(which python3 | head -n 1) .
+	cp $(shell which python3 | head -n 1) .
 	python3 codegen.py $(CONFIG)
 
 local:
