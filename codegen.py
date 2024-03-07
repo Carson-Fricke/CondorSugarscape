@@ -63,7 +63,7 @@ def make_description(output_file, num_seeds: int, dec_model: str):
 +sugarscape_simulation = true
 
 executable = python3
-transfer_input_files = sugarscape.py {dec_model}-$(Process)conf.json
+transfer_input_files = sugarscape.py, {dec_model}-$(Process)conf.json, agent.py, cell.py, disease.py, environment.py, ethics.py
 arguments = sugarscape.py {dec_model}-$(Process)conf.json
 
 request_cpus = 1
