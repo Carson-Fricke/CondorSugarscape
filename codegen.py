@@ -56,29 +56,28 @@ def make_config(confo, seed: int, dec_model: str):
 
 
 # very silly indenting syntax incoming
-def make_description(configf, num_seeds: int, dec_model: str):
-    with open(configf, 'r+') as f:
+def make_description(output_file, num_seeds: int, dec_model: str):
+    with open(output_file, 'w') as f:
         f.truncate(0)
-        f.write(
-f'''
+        f.write(f'''
 +sugarscape_simulation = true
 
 executable = python3
-transfer_input_files = {inputpov}, WRC_RubiksCube.inc
-arguments = +I{inputpov} +Oframe$(Process).png Width={renderwidth} Height={renderheight} +K$$([$(Process) * {1 / float(frames):.3f}])
+transfer_input_files = sugarscape.py {dec_model}-$(Process)conf.json
+arguments = sugarscape.py {dec_model}-$(Process)conf.json
 
 request_cpus = 1
 request_memory = 4096M
 request_disk = 1G
 
-error = err.log
-output = output{renderheight}p.log
-log = povray.log
+error = condor_error.log
+output = {dec_model}-$(Process)log.json
+log = condor_sugarscape.log
 
-transfer_output_files = frame$(Process).png
+transfer_output_files = {dec_model}-$(Process)log.json
 
 should_transfer_files = YES
-queue {frames}
+queue {num_seeds}
 ''')
 
 if __name__ == '__main__':
@@ -90,6 +89,7 @@ if __name__ == '__main__':
     ns, dms, options = parseConfiguration(conf)
     
     for dm in dms:
+        make_description(f'{dm}_description.submit', ns, dm)
         for seed in range(ns):
             make_config(options, seed, dm)
 
