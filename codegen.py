@@ -33,7 +33,7 @@ def make_config(confo, seed: int, dec_model: str):
 
     options['dataCollectionOptions']['decisionModels'] = [dec_model]
     options['sugarscapeOptions']['seed'] = seed
-    options['sugarscapeOptions']['logfile'] = f'{dec_model}-{seed}.sslog'
+    options['sugarscapeOptions']['logfile'] = f'{dec_model}-{seed}.json.sslog'
 
     # options that must be set for propper running
     # Right now, we will not support profiling, screenshots, or plots
