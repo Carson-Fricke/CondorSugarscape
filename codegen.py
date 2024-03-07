@@ -33,7 +33,7 @@ def make_config(confo, seed: int, dec_model: str):
 
     options['dataCollectionOptions']['decisionModels'] = [dec_model]
     options['sugarscapeOptions']['seed'] = seed
-    options['sugarscapeOptions']['logfile'] = f'{dec_model}-{seed}log.json'
+    options['sugarscapeOptions']['logfile'] = f'{dec_model}-{seed}.sslog'
 
     # options that must be set for propper running
     # Right now, we will not support profiling, screenshots, or plots
@@ -47,7 +47,7 @@ def make_config(confo, seed: int, dec_model: str):
 
     out = json.dumps(options)
     
-    with open(f'{dec_model}-{seed}conf.json', 'w') as f:
+    with open(f'{dec_model}-{seed}.json.conf', 'w') as f:
         f.truncate(0)
         f.write(out)
 
@@ -63,18 +63,18 @@ def make_description(output_file, num_seeds: int, dec_model: str):
 +sugarscape_simulation = true
 
 executable = python3
-transfer_input_files = sugarscape.py, {dec_model}-$(Process)conf.json, agent.py, cell.py, disease.py, environment.py, ethics.py
-arguments = sugarscape.py {dec_model}-$(Process)conf.json
+transfer_input_files = sugarscape.py, {dec_model}-$(Process).json.conf, agent.py, cell.py, disease.py, environment.py, ethics.py
+arguments = sugarscape.py --conf {dec_model}-$(Process).json.conf
 
 request_cpus = 1
 request_memory = 4096M
 request_disk = 1G
 
 error = condor_error.log
-output = {dec_model}-$(Process)log.json
+output = {dec_model}-$(Process).json.sslog
 log = condor_sugarscape.log
 
-transfer_output_files = {dec_model}-$(Process)log.json
+transfer_output_files = {dec_model}-$(Process).json.sslog
 
 should_transfer_files = YES
 queue {num_seeds}
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     ns, dms, options = parseConfiguration(conf)
     
     for dm in dms:
-        make_description(f'{dm}_description.submit', ns, dm)
+        make_description(f'{dm}.submit', ns, dm)
         for seed in range(ns):
             make_config(options, seed, dm)
 
