@@ -12,10 +12,10 @@ PLOTS = $(PLOTCHECK) \
 		plots/*.pdf \
 		plots/*.plg
 
-CLEAN = *.json.config \ 
-		*.json.log \ 
+CLEAN = *.json.config \
+		*.json.log \
 		*.submit \
-		python3 \ 
+		python3 \
 		$(DATASET) \
 		$(PLOTS)
 
