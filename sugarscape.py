@@ -985,7 +985,8 @@ if __name__ == "__main__":
     configuration = parseOptions(configuration)
     configuration = verifyConfiguration(configuration)
     if configuration["headlessMode"] == False:
-        import gui
+        pass # NO GUI ALLOWED!
+        # import gui
     random.seed(configuration["seed"])
     S = Sugarscape(configuration)
     if configuration["profileMode"] == True:
