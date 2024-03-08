@@ -54,7 +54,7 @@ local:
 	$(PYTHON) $(SUGARSCAPE) --conf $(CONFIG)
 
 condor:
-	$(PYTHON)
+	$(PYTHON) condor.py $(CONFIG)
 
 clean:
 	rm -rf $(CLEAN) || true

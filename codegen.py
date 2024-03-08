@@ -92,7 +92,3 @@ if __name__ == '__main__':
         make_description(f'{dm}.submit', ns, dm)
         for seed in range(ns):
             make_config(options, seed, dm)
-
-    pass
-
-
