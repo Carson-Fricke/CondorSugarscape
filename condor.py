@@ -11,4 +11,4 @@ if __name__ == '__main__':
     ns, dms, options = parseConfiguration(conf)
 
     for dm in dms:
-        s.run(f'condor_submit {dm}.submit')
+        s.run(['condor_submit', f' {dm}.submit'])

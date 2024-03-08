@@ -71,7 +71,7 @@ request_memory = 4096M
 request_disk = 1G
 
 error = condor_error.log
-output = {dec_model}-$(Process).json.sslog
+output = stdout.log
 log = condor_sugarscape.log
 
 transfer_output_files = {dec_model}-$(Process).json.sslog

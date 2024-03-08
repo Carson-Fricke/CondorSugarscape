@@ -12,8 +12,8 @@ PLOTS = $(PLOTCHECK) \
 		plots/*.pdf \
 		plots/*.plg
 
-CLEAN = *.json.config \
-		*.json.log \
+CLEAN = *.json.conf \
+		*.json.sslog \
 		*.submit \
 		python3 \
 		$(DATASET) \
