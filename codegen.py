@@ -59,8 +59,8 @@ def make_config(confo, seed: int, dec_model: str):
 def make_description(output_file, num_seeds: int, dec_model: str):
     with open(output_file, 'w') as f:
         f.truncate(0)
-        f.write(f'''
-+sugarscape_simulation = true
+        f.write(
+f'''+sugarscape_simulation = true
 
 executable = python3
 transfer_input_files = sugarscape.py, {dec_model}-$(Process).json.conf, agent.py, cell.py, disease.py, environment.py, ethics.py
