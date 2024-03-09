@@ -77,8 +77,7 @@ log = condor.clog
 transfer_output_files = {dec_model}-$(Process).json.sslog
 when_to_transfer_output = on_exit
 
-periodic_hold = (JobStatus == 2) && (time() - EnteredCurrentStatus) > 360
-periodic_release = True
+allowed_job_duration = 600
 
 should_transfer_files = YES
 queue {num_seeds}
