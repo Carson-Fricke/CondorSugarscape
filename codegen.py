@@ -56,33 +56,35 @@ def make_config(confo, seed: int, dec_model: str):
 
 
 # very silly indenting syntax incoming
-def make_description(output_file, seed: int, dec_model: str):
+def make_description(output_file, num_seeds: int, dec_model: str):
     with open(output_file, 'w') as f:
         f.truncate(0)
         f.write(
 f'''+sugarscape_simulation = true
 
 executable = python3
-transfer_input_files = sugarscape.py, {dec_model}-{seed}.json.conf, agent.py, cell.py, disease.py, environment.py, ethics.py
-arguments = sugarscape.py --conf {dec_model}-{seed}.json.conf
+transfer_input_files = sugarscape.py, {dec_model}-$(Process).json.conf, agent.py, cell.py, disease.py, environment.py, ethics.py
+arguments = sugarscape.py --conf {dec_model}-$(Process).json.conf
 
 request_cpus = 1
 request_memory = 2048M
 request_disk = 1G
 
-max_retries = 5
+max_retries = 15
 
-error = {dec_model}-{seed}_error.clog
-output = {dec_model}-{seed}_stdout.clog
-log = {dec_model}-{seed}_condor.clog
+error = {dec_model}-$(Process)_error.clog
+output = {dec_model}-$(Process)_stdout.clog
+log = {dec_model}_condor.clog
 
-transfer_output_files = {dec_model}-{seed}.json.sslog
+transfer_output_files = {dec_model}-$(Process).json.sslog
 when_to_transfer_output = on_exit
 
+MAX_PERIODIC_EXPR_INTERVAL = 60
+PERIODIC_EXPR_INTERVAL = 20
 periodic_release = (1 == 1)
 
 should_transfer_files = YES
-queue
+queue {num_seeds}
 ''')
 
 if __name__ == '__main__':
@@ -94,6 +96,6 @@ if __name__ == '__main__':
     ns, dms, options = parseConfiguration(conf)
     
     for dm in dms:
+        make_description(f'{dm}.submit', ns, dm)
         for seed in range(ns):
-            make_description(f'{dm}-{seed}.submit', seed, dm)
             make_config(options, seed, dm)

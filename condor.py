@@ -1,8 +1,8 @@
-import shlex
-from sys import run
+#import shlex
+import sys
 from time import sleep
 import subprocess as s
-from codegen import parseConfiguration
+from codegenold1 import parseConfiguration
 
 
 if __name__ == '__main__':
@@ -13,8 +13,9 @@ if __name__ == '__main__':
     ns, dms, options = parseConfiguration(conf)
 
     for dm in dms:
-        for seed in range(ns):
-            s.run(['condor_submit', f'{dm}-{seed}.submit'])
+        s.run(['condor_submit', f'{dm}.submit'])
+        #for seed in range(ns):
+        #    s.run(['condor_submit', f'{dm}-{seed}.submit'])
 
 
     """while True:
