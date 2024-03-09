@@ -2,7 +2,7 @@
 import sys
 from time import sleep
 import subprocess as s
-from codegenold1 import parseConfiguration
+from codegen import parseConfiguration
 
 
 if __name__ == '__main__':
