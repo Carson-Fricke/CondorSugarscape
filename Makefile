@@ -14,6 +14,7 @@ PLOTS = $(PLOTCHECK) \
 
 CLEAN = *.json.conf \
 		*.json.sslog \
+		*.clog \
 		*.submit \
 		python3 \
 		$(DATASET) \
