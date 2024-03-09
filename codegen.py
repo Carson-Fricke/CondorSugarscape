@@ -51,9 +51,6 @@ def make_config(confo, seed: int, dec_model: str):
         f.truncate(0)
         f.write(out)
 
-    
-
-
 
 # very silly indenting syntax incoming
 def make_description(output_file, num_seeds: int, dec_model: str):
@@ -66,7 +63,7 @@ executable = python3
 transfer_input_files = sugarscape.py, {dec_model}-$(Process).json.conf, agent.py, cell.py, disease.py, environment.py, ethics.py
 arguments = sugarscape.py --conf {dec_model}-$(Process).json.conf
 
-request_cpus = 1
+request_cpus = 4
 request_memory = 2048M
 request_disk = 1G
 Rank = KFlops
@@ -80,7 +77,8 @@ log = condor.clog
 transfer_output_files = {dec_model}-$(Process).json.sslog
 when_to_transfer_output = on_exit
 
-periodic_release = (1 == 1)
+periodic_hold = (JobStatus == 2) && (time() - EnteredCurrentStatus) > 360
+periodic_release = True
 
 should_transfer_files = YES
 queue {num_seeds}
