@@ -69,7 +69,7 @@ arguments = sugarscape.py --conf {dec_model}-$(Process).json.conf
 request_cpus = 1
 request_memory = 2048M
 request_disk = 1G
-Rank = $$([Mips * KFlops])
+Rank = KFlops
 
 max_retries = 100
 

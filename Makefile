@@ -20,6 +20,12 @@ CLEAN = *.json.conf \
 		$(DATASET) \
 		$(PLOTS)
 
+LEAN = *.json.conf \
+		*.clog \
+		*.submit \
+		$(DATASET) \
+		$(PLOTS)
+
 # Change to python3 (or other alias) if needed
 PYTHON = python3
 SUGARSCAPE = sugarscape.py
@@ -59,9 +65,11 @@ condor:
 
 clean:
 	rm -rf $(CLEAN) || true
+	condor_rm $(shell whoami)
 
 lean:
-	rm -rf $(PLOTS) || true
+	rm -rf $(LEAN) || true
+	condor_rm $(shell whoami)
 
 .PHONY: all clean data lean plots setup
 
