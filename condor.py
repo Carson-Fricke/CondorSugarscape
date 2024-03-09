@@ -27,7 +27,7 @@ if __name__ == '__main__':
         print(f'Jobs Left: {len(job_status)}; Idle: {job_status.count("1")}; Running: {job_status.count("2")}; On Hold: {job_status.count("5")}')
         if len(job_status) == 0:
             break
-        if len(job_status.count("5")) > 0:
+        if job_status.count("5") > 0:
             _ = run(shlex.split(r"""condor_release -constraint 'sugarscape_simulation == true'"""), stdout=PIPE)
         sleep(3)
         print('\033[1A', end='\x1b[2K')
