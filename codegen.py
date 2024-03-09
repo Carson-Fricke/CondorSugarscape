@@ -53,15 +53,15 @@ def make_config(confo, seed: int, dec_model: str):
 
 
 # very silly indenting syntax incoming
-def make_description(output_file, num_seeds: int, dec_model: str):
+def make_description(output_file,seeds: int, dec_model: str):
     with open(output_file, 'w') as f:
         f.truncate(0)
         f.write(
 f'''+sugarscape_simulation = true
 
 executable = python3
-transfer_input_files = sugarscape.py, {dec_model}-$(Process).json.conf, agent.py, cell.py, disease.py, environment.py, ethics.py
-arguments = sugarscape.py --conf {dec_model}-$(Process).json.conf
+transfer_input_files = sugarscape.py, {dec_model}-{seed}.json.conf, agent.py, cell.py, disease.py, environment.py, ethics.py
+arguments = sugarscape.py --conf {dec_model}-{seed}.json.conf
 
 request_cpus = 4
 request_memory = 2048M
@@ -71,16 +71,16 @@ Rank = KFlops
 max_retries = 100
 
 error = {dec_model}-error.clog
-output = {dec_model}-$(Process)_stdout.clog
+output = {dec_model}-{seed}_stdout.clog
 log = condor.clog
 
-transfer_output_files = {dec_model}-$(Process).json.sslog
+transfer_output_files = {dec_model}-{seed}.json.sslog
 when_to_transfer_output = on_exit
 
 allowed_job_duration = 1500
 
 should_transfer_files = YES
-queue {num_seeds}
+queue
 ''')
 
 if __name__ == '__main__':
@@ -92,6 +92,7 @@ if __name__ == '__main__':
     ns, dms, options = parseConfiguration(conf)
     
     for dm in dms:
-        make_description(f'{dm}.submit', ns, dm)
+        
         for seed in range(ns):
+            make_description(f'{dm}-{seed}.submit', seed, dm)
             make_config(options, seed, dm)
