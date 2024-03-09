@@ -70,12 +70,16 @@ request_cpus = 1
 request_memory = 4096M
 request_disk = 1G
 
+max_retries = 5
+
 error = {dec_model}-$(Process)_error.clog
 output = {dec_model}-$(Process)_stdout.clog
 log = {dec_model}_condor.clog
 
 transfer_output_files = {dec_model}-$(Process).json.sslog
 when_to_transfer_output = on_exit
+
+periodic_release = (1 == 1)
 
 should_transfer_files = YES
 queue {num_seeds}
