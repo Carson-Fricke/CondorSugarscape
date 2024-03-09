@@ -77,7 +77,7 @@ log = condor.clog
 transfer_output_files = {dec_model}-{seed}.json.sslog
 when_to_transfer_output = on_exit
 
-allowed_job_duration = 1500
+allowed_job_duration = 180
 
 should_transfer_files = YES
 queue
