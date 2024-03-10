@@ -1014,9 +1014,10 @@ if __name__ == "__main__":
             fp.write(json.dumps(log_info))
         S.log = open(configuration["logfile"], 'a') if configuration["logfile"] != None else None
         print(f'successful truncation of {pf} at timestep {S.timestep}')
-    except e:
+    except Exception as err:
+        print(err)
         S = Sugarscape(configuration)
-        print('failed load')
+        
     
     if configuration["profileMode"] == True:
         import cProfile
