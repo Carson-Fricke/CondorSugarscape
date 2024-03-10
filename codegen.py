@@ -64,7 +64,7 @@ def make_description(output_file, seeds: int, dec_model: str):
 f'''+sugarscape_simulation_{USER} = true
 
 executable = python3
-transfer_input_files = sugarscape_checkpoints.py, {dec_model}-{seed}.json.conf, {dec_model}-{seed}.pickle, agent.py, cell.py, disease.py, environment.py, ethics.py
+transfer_input_files = sugarscape_checkpoints.py, {dec_model}-{seed}.json.conf, {dec_model}-{seed}.json.sslog, {dec_model}-{seed}.pickle, agent.py, cell.py, disease.py, environment.py, ethics.py
 arguments = sugarscape_checkpoints.py --conf {dec_model}-{seed}.json.conf
 
 request_cpus = 16
@@ -101,4 +101,6 @@ if __name__ == '__main__':
             make_description(f'{dm}-{seed}.submit', seed, dm)
             make_config(options, seed, dm)
             with open(f'{dm}-{seed}.pickle', 'w') as fp:
+                pass
+            with open(f'{dm}-{seed}.json.sslog', 'w') as fp:
                 pass
