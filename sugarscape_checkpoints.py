@@ -1003,17 +1003,18 @@ if __name__ == "__main__":
     S: Sugarscape = None
     pf = configuration['pickle']
     try:
-        d = open(pf, 'r+')
+        d = open(pf, 'rb')
         S = pickle.load(pf)
         d.close()
+        print(f'successful load of {pf} at timestep {S.timestep}')
         with open(configuration['logfile'], 'w+') as fp:
             log_info = json.loads(fp.read())
             log_info = list(filter(lambda x: int(x['timestep']) <= S.timestep, log_info))
             fp.truncate(0)
             fp.write(json.dumps(log_info))
         S.log = open(configuration["logfile"], 'a') if configuration["logfile"] != None else None
-        print(f'successful load of {pf} at timestep {S.timestep}')
-    except:
+        print(f'successful truncation of {pf} at timestep {S.timestep}')
+    except e:
         S = Sugarscape(configuration)
         print('failed load')
     
