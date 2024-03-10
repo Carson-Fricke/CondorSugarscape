@@ -37,6 +37,7 @@ def make_config(confo, seed: int, dec_model: str):
     options['dataCollectionOptions']['decisionModels'] = [dec_model]
     options['sugarscapeOptions']['seed'] = seed
     options['sugarscapeOptions']['logfile'] = f'{dec_model}-{seed}.json.sslog'
+    options['sugarscapeOptions']['pickle'] = f'{dec_model}-{seed}.pickle'
 
     # options that must be set for propper running
     # Right now, we will not support profiling, screenshots, or plots
@@ -63,24 +64,24 @@ def make_description(output_file, seeds: int, dec_model: str):
 f'''+sugarscape_simulation_{USER} = true
 
 executable = python3
-transfer_input_files = sugarscape.py, {dec_model}-{seed}.json.conf, agent.py, cell.py, disease.py, environment.py, ethics.py
-arguments = sugarscape.py --conf {dec_model}-{seed}.json.conf
+transfer_input_files = sugarscape_checkpoints.py, {dec_model}-{seed}.json.conf, {dec_model}-{seed}.pickle, agent.py, cell.py, disease.py, environment.py, ethics.py
+arguments = sugarscape_checkpoints.py --conf {dec_model}-{seed}.json.conf
 
 request_cpus = 16
 request_memory = 2048M
 request_disk = 1G
 Rank = Mips
 
-max_retries = 100
+max_retries = 200
 
 error = {dec_model}-error.clog
 output = {dec_model}-{seed}_stdout.clog
 log = condor.clog
 
-transfer_output_files = {dec_model}-{seed}.json.sslog
-when_to_transfer_output = on_exit
+transfer_output_files = {dec_model}-{seed}.json.sslog, {dec_model}-{seed}.pickle
+when_to_transfer_output = ON_EXIT_OR_EVICT
 
-allowed_job_duration = 240
+allowed_job_duration = 15000
 
 should_transfer_files = YES
 queue
@@ -99,3 +100,5 @@ if __name__ == '__main__':
         for seed in range(ns):
             make_description(f'{dm}-{seed}.submit', seed, dm)
             make_config(options, seed, dm)
+            with open(f'{dm}-{seed}.pickle', 'w') as fp:
+                pass

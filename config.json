@@ -5,7 +5,7 @@
         "decisionModels": ["benthamHalfLookaheadBinary", "egoisticHalfLookaheadBinary", "rawSugarscape"],
         "jobUpdateFrequency": 5,
         "numParallelSimJobs": 1,
-        "numSeeds": 100,
+        "numSeeds": 5,
         "plots": ["population", "meanttl", "starvationCombat", "wealth", "wealthNormalized", "meanAgeAtDeath"],
         "plotTimesteps": 1000,
         "pythonAlias": "python"
@@ -74,6 +74,7 @@
         "interfaceHeight": 1000,
         "interfaceWidth": 900,
         "logfile": "log.json",
+        "Pickle": "None",
         "profileMode": false,
         "screenshots": false,
         "seed": -1,
