@@ -1001,9 +1001,10 @@ if __name__ == "__main__":
         # import gui
     random.seed(configuration["seed"])
     S: Sugarscape = None
+    pf = configuration['pickle']
     try:
-        d = open(configuration['pickle'], 'r+')
-        S = pickle.load(configuration['pickle'])
+        d = open(pf, 'r+')
+        S = pickle.load(pf)
         d.close()
         with open(configuration['logfile'], 'w+') as fp:
             log_info = json.loads(fp.read())
@@ -1011,7 +1012,7 @@ if __name__ == "__main__":
             fp.truncate(0)
             fp.write(json.dumps(log_info))
         S.log = open(configuration["logfile"], 'a') if configuration["logfile"] != None else None
-        print(f'successful load of {configuration['pickle']} at timestep {S.timestep}')
+        print(f'successful load of {pf} at timestep {S.timestep}')
     except:
         S = Sugarscape(configuration)
         print('failed load')
