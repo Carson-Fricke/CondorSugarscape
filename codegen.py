@@ -1,8 +1,8 @@
 import json
 import sys
-from subprocess import PIPE, run
+import getpass
 
-USER = str(run(['whoami'], stdout=PIPE).stdout.decode('utf-8'))
+USER = getpass.getuser()
 
 def parseConfiguration(configFile):
     file = open(configFile)

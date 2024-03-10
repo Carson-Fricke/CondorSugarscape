@@ -3,9 +3,11 @@ import shlex
 import sys
 from time import sleep
 import subprocess as s
-from codegen import parseConfiguration, USER
+from codegen import parseConfiguration
 from subprocess import PIPE, run
+import getpass
 
+USER = getpass.getuser()
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
