@@ -14,7 +14,7 @@ import math
 import random
 import sys
 
-sys.setrecursionlimit(10000)
+sys.setrecursionlimit(100000)
 
 class Sugarscape:
     def __init__(self, configuration):
@@ -1010,11 +1010,11 @@ if __name__ == "__main__":
             log_info = list(filter(lambda x: int(x['timestep']) <= S.timestep, log_info))
             fp.truncate(0)
             fp.write(json.dumps(log_info))
-
         S.log = open(configuration["logfile"], 'a') if configuration["logfile"] != None else None
-
+        print(f'successful load of {configuration['pickle']} at timestep {S.timestep}')
     except:
         S = Sugarscape(configuration)
+        print('failed load')
     
     if configuration["profileMode"] == True:
         import cProfile
