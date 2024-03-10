@@ -14,6 +14,8 @@ import math
 import random
 import sys
 
+sys.setrecursionlimit(10000)
+
 class Sugarscape:
     def __init__(self, configuration):
         self.diseaseConfigHashes = None
@@ -222,7 +224,7 @@ class Sugarscape:
                 if self.timestep % 100 == 0:
                     tl = self.log
                     self.log = None
-                    d = open(self.pickle, 'w')
+                    d = open(self.pickle, 'wb')
                     pickle.dump(self, d)
                     d.close()
                     self.log = tl
