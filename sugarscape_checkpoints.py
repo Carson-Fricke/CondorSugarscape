@@ -222,7 +222,9 @@ class Sugarscape:
                 if self.timestep % 100 == 0:
                     tl = self.log
                     self.log = None
-                    pickle.dump(self, self.pickle)
+                    d = open(self.pickle, 'w')
+                    pickle.dump(self, d)
+                    d.close()
                     self.log = tl
                 self.writeToLog()
 
@@ -998,7 +1000,9 @@ if __name__ == "__main__":
     random.seed(configuration["seed"])
     S: Sugarscape = None
     try:
+        d = open(configuration['pickle'], 'r+')
         S = pickle.load(configuration['pickle'])
+        d.close()
         with open(configuration['logfile'], 'w+') as fp:
             log_info = json.loads(fp.read())
             log_info = list(filter(lambda x: int(x['timestep']) <= S.timestep, log_info))
