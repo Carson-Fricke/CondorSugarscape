@@ -2,7 +2,7 @@ import json
 import sys
 from subprocess import PIPE, run
 
-USER = run(['whoami'], stdout=PIPE)
+USER = str(run(['whoami'], stdout=PIPE).stdout.decode('utf-8'))
 
 def parseConfiguration(configFile):
     file = open(configFile)
