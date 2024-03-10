@@ -63,10 +63,10 @@ executable = python3
 transfer_input_files = sugarscape.py, {dec_model}-{seed}.json.conf, agent.py, cell.py, disease.py, environment.py, ethics.py
 arguments = sugarscape.py --conf {dec_model}-{seed}.json.conf
 
-request_cpus = 4
+request_cpus = 8
 request_memory = 2048M
 request_disk = 1G
-Rank = KFlops
+Rank = Mips
 
 max_retries = 100
 
