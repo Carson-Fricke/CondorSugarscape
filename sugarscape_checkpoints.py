@@ -1006,11 +1006,16 @@ if __name__ == "__main__":
         with open(pf, 'rb') as d:
             S = pickle.load(d)
         print(f'successful load of {pf} at timestep {S.timestep}')
-        with open(configuration['logfile'], 'w+') as fp:
-            log_info = json.loads(fp.read())
-            log_info = list(filter(lambda x: int(x['timestep']) <= S.timestep, log_info))
-            fp.truncate(0)
-            fp.write(json.dumps(log_info))
+        try: 
+            with open(configuration['logfile'], 'w+') as fp:
+                fps = fp.read()
+                log_info = json.loads(fps if fps[-1] == ']' else fps + ']')
+                log_info = list(filter(lambda x: int(x['timestep']) <= S.timestep, log_info))
+                fp.truncate(0)
+                fp.write(json.dumps(log_info))
+        except Exception as err2:
+            print('json load failed')
+            print(err2)
         S.log = open(configuration["logfile"], 'a') if configuration["logfile"] != None else None
         print(f'successful truncation of {pf} at timestep {S.timestep}')
     except Exception as err:
