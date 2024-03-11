@@ -1009,6 +1009,8 @@ if __name__ == "__main__":
         try: 
             with open(configuration['logfile'], 'w+') as fp:
                 fps = fp.read()
+                print(len(fps))
+                print(fps[-1])
                 log_info = json.loads(fps if fps[-1] == ']' else fps + ']')
                 log_info = list(filter(lambda x: int(x['timestep']) <= S.timestep, log_info))
                 fp.truncate(0)
