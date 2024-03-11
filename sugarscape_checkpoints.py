@@ -1003,9 +1003,8 @@ if __name__ == "__main__":
     S: Sugarscape = None
     pf = configuration['pickle']
     try:
-        d = open(pf, 'rb')
-        S = pickle.load(pf)
-        d.close()
+        with open(pf, 'rb') as d:
+            S = pickle.load(d)
         print(f'successful load of {pf} at timestep {S.timestep}')
         with open(configuration['logfile'], 'w+') as fp:
             log_info = json.loads(fp.read())
