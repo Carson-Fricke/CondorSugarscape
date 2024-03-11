@@ -1009,7 +1009,7 @@ if __name__ == "__main__":
         try: 
             log_info = None
             with open(configuration['logfile'], 'r') as fp:
-                fps = fp.read()
+                fps = fp.read().strip()
                 print(configuration['logfile'])
                 print(len(fps))
                 print(fps[-1])
