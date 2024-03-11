@@ -15,6 +15,7 @@ PLOTS = $(PLOTCHECK) \
 CLEAN = *.json.conf \
 		*.json.sslog \
 		*.clog \
+		*.pickle \
 		*.submit \
 		python3 \
 		$(DATASET) \
@@ -23,6 +24,7 @@ CLEAN = *.json.conf \
 LEAN = *.json.conf \
 		*.clog \
 		*.submit \
+		*.pickle
 		$(DATASET) \
 		$(PLOTS)
 

@@ -1012,24 +1012,17 @@ if __name__ == "__main__":
             log_info = None
             with open(configuration['logfile'], 'r') as fp:
                 fps = fp.read().strip()
-                print(configuration['logfile'])
-                print(fps[-20:])
-                print(fps[-1])
                 ls = fps if fps[-1] == ']' else fps[:-1] + ']'
-                print(ls[-20:])
                 log_info = json.loads(ls)
                 log_info = list(filter(lambda x: int(x['timestep']) <= S.timestep, log_info))
             with open(configuration['logfile'], 'w') as fp:
                 o = json.dumps(log_info).strip()
-                print('write verbosity')
-                print(o[-20:])
-                print(o[-1])
                 fp.write(o[:-1] + ',\n')
         except Exception as err2:
             print('json load failed')
             print(err2)
         S.log = open(configuration["logfile"], 'a') if configuration["logfile"] != None else None
-        print(f'successful truncation of {pf} at timestep {S.timestep}')
+        print(f'successful truncation of {pf} to timestep {S.timestep}')
     except Exception as err:
         print(err)
         S = Sugarscape(configuration)
