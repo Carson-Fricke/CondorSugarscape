@@ -24,7 +24,7 @@ CLEAN = *.json.conf \
 LEAN = *.json.conf \
 		*.clog \
 		*.submit \
-		*.pickle
+		*.pickle \
 		$(DATASET) \
 		$(PLOTS)
 
