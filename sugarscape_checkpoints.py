@@ -1009,6 +1009,7 @@ if __name__ == "__main__":
         try: 
             with open(configuration['logfile'], 'w+') as fp:
                 fps = fp.read()
+                print(configuration['logfile'])
                 print(len(fps))
                 print(fps[-1])
                 log_info = json.loads(fps if fps[-1] == ']' else fps + ']')
