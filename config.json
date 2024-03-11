@@ -74,7 +74,7 @@
         "interfaceHeight": 1000,
         "interfaceWidth": 900,
         "logfile": "log.json",
-        "Pickle": "None",
+        "pickle": "None",
         "profileMode": false,
         "screenshots": false,
         "seed": -1,
