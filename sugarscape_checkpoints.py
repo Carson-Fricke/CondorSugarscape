@@ -586,7 +586,9 @@ class Sugarscape:
                 self.gui.doTimestep()
 
     def runSimulation(self, timesteps=5):
-        self.startLog()
+        if self.timestep < 10:
+            self.startLog()
+        
         if self.gui != None:
             # Simulation begins paused until start button in GUI pressed
             self.pauseSimulation()
