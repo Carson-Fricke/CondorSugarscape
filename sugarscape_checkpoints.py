@@ -1016,7 +1016,11 @@ if __name__ == "__main__":
                 log_info = json.loads(fps if fps[-1] == ']' else fps[:-1] + ']')
                 log_info = list(filter(lambda x: int(x['timestep']) <= S.timestep, log_info))
             with open(configuration['logfile'], 'w') as fp:
-                fp.write(json.dumps(log_info).strip()[:-1] + ',')
+                o = json.dumps(log_info).strip()
+                print('write verbosity')
+                print(o[-10:])
+                print(o[-1])
+                fp.write(o[:-1] + ',')
         except Exception as err2:
             print('json load failed')
             print(err2)
