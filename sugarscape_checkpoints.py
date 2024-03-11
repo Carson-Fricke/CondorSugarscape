@@ -1013,7 +1013,7 @@ if __name__ == "__main__":
                 print(configuration['logfile'])
                 print(len(fps))
                 print(fps[-1])
-                log_info = json.loads(fps if fps[-1] == ']' else fps + ']')
+                log_info = json.loads(fps if fps[-1] == ']' else fps[:-1] + ']')
                 log_info = list(filter(lambda x: int(x['timestep']) <= S.timestep, log_info))
             with open(configuration['logfile'], 'w') as fp:
                 fp.write(json.dumps(log_info))
