@@ -30,9 +30,8 @@ if __name__ == '__main__':
         if len(job_status) == 0:
             break
         if job_status.count("5") > 0:
-            #_ = run(shlex.split(f"""condor_release -constraint 'sugarscape_simulation_{USER} == true'"""), stdout=PIPE)
-            pass
-        sleep(3)
+            _ = run(shlex.split(f"""condor_release -constraint 'sugarscape_simulation_{USER} == true'"""), stdout=PIPE)
+        sleep(5)
         print('\033[1A', end='\x1b[2K')
 
     print('Job Complete!')

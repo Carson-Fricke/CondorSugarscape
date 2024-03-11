@@ -64,8 +64,8 @@ def make_description(output_file, seeds: int, dec_model: str):
 f'''+sugarscape_simulation_{USER} = true
 
 executable = python3
-transfer_input_files = sugarscape_checkpoints.py, {dec_model}-{seed}.json.conf, {dec_model}-{seed}.json.sslog, {dec_model}-{seed}.pickle, agent.py, cell.py, disease.py, environment.py, ethics.py
-arguments = sugarscape_checkpoints.py --conf {dec_model}-{seed}.json.conf
+transfer_input_files = sugarscape.py, {dec_model}-{seed}.json.conf, {dec_model}-{seed}.json.sslog, {dec_model}-{seed}.pickle, agent.py, cell.py, disease.py, environment.py, ethics.py
+arguments = sugarscape.py --conf {dec_model}-{seed}.json.conf
 
 request_cpus = 16
 request_memory = 2048M
@@ -76,7 +76,7 @@ max_retries = 200
 
 error = {dec_model}-error.clog
 output = {dec_model}-{seed}_stdout.clog
-log = condor.clog
+log = condor.log
 
 transfer_output_files = {dec_model}-{seed}.json.sslog, {dec_model}-{seed}.pickle
 when_to_transfer_output = ON_EXIT_OR_EVICT

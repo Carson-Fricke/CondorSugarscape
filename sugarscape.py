@@ -1,5 +1,6 @@
 #! /usr/bin/python
 
+import pickle
 import agent
 import cell
 import disease
@@ -12,6 +13,8 @@ import json
 import math
 import random
 import sys
+
+sys.setrecursionlimit(100000)
 
 class Sugarscape:
     def __init__(self, configuration):
@@ -55,6 +58,7 @@ class Sugarscape:
                              "agentWealthTotal": 0, "environmentWealthTotal": 0, "agentWealthCollected": 0, "agentWealthBurnRate": 0, "agentMeanTimeToLive": 0, "agentWealths": [],
                              "agentTimesToLive": [], "agentTimesToLiveAgeLimited": [], "agentTotalMetabolism": 0}
         self.log = open(configuration["logfile"], 'a') if configuration["logfile"] != None else None
+        self.pickle = configuration["pickle"]
 
     def addAgent(self, agent):
         self.agents.append(agent)
@@ -217,6 +221,13 @@ class Sugarscape:
             self.updateRuntimeStats()
             # If final timestep, do not write to log to cleanly close JSON array log structure
             if self.timestep != self.maxTimestep and len(self.agents) > 0:
+                if self.timestep % 100 == 0:
+                    tl = self.log
+                    self.log = None
+                    d = open(self.pickle, 'wb')
+                    pickle.dump(self, d)
+                    d.close()
+                    self.log = tl
                 self.writeToLog()
 
     def endLog(self):
@@ -575,7 +586,9 @@ class Sugarscape:
                 self.gui.doTimestep()
 
     def runSimulation(self, timesteps=5):
-        self.startLog()
+        if self.timestep < 10:
+            self.startLog()
+        
         if self.gui != None:
             # Simulation begins paused until start button in GUI pressed
             self.pauseSimulation()
@@ -975,6 +988,7 @@ if __name__ == "__main__":
                      "interfaceHeight": 1000,
                      "interfaceWidth": 900,
                      "logfile": None,
+                     "pickle": None,
                      "profileMode": False,
                      "screenshots": False,
                      "seed": -1,
@@ -988,7 +1002,32 @@ if __name__ == "__main__":
         pass # NO GUI ALLOWED!
         # import gui
     random.seed(configuration["seed"])
-    S = Sugarscape(configuration)
+    S: Sugarscape = None
+    pf = configuration['pickle']
+    try:
+        with open(pf, 'rb') as d:
+            S = pickle.load(d)
+        print(f'successful load of {pf} at timestep {S.timestep}')
+        try: 
+            log_info = None
+            with open(configuration['logfile'], 'r') as fp:
+                fps = fp.read().strip()
+                ls = fps if fps[-1] == ']' else fps[:-1] + ']'
+                log_info = json.loads(ls)
+                log_info = list(filter(lambda x: int(x['timestep']) <= S.timestep, log_info))
+            with open(configuration['logfile'], 'w') as fp:
+                o = json.dumps(log_info).strip()
+                fp.write(o[:-1] + ',\n')
+        except Exception as err2:
+            print('json load failed')
+            print(err2)
+        S.log = open(configuration["logfile"], 'a') if configuration["logfile"] != None else None
+        print(f'successful truncation of {pf} to timestep {S.timestep}')
+    except Exception as err:
+        print(err)
+        S = Sugarscape(configuration)
+        
+    
     if configuration["profileMode"] == True:
         import cProfile
         import tracemalloc
