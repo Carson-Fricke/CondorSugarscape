@@ -28,9 +28,6 @@ condor:
 run:
 	$(PYTHON) condor.py $(CONFIG)
 
-small:
-	$(PYTHON) condor.py config-small.json
-
 clean:
 	rm -rf $(CLEAN) || true
 	condor_rm $(shell whoami)
